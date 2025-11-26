@@ -1,0 +1,468 @@
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+    overflow-x: hidden !important;
+    }
+
+    body { font-family: 'Segoe UI', sans-serif; 
+    background:rgb(242, 244, 242);
+    color:rgb(65, 48, 24);
+    margin-bottom: 120px; /* o el alto real del countdown */
+    }
+    body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  overflow-x:hidden;
+  background: url('resources/fondo.jpg') top center / cover no-repeat;
+  opacity: 0.85; /* Controlá cuán opaco querés el fondo */
+  z-index: -1; /* Para que no tape el contenido */
+  pointer-events: none; /* Para que no interfiera con clicks */
+}
+
+    header {
+    
+      background: url('resources/header-maite.png') center/cover no-repeat; 
+      height: 100vh;
+      display: flex;
+       flex-direction: column; /* cambia fila por columna */
+      align-items: center;
+      justify-content:start;
+      text-align: top ;
+      color: rgb(252, 252, 252);
+       text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+
+    }
+    header h1 {
+      padding-top: 30%;
+      padding-left: 0;
+      padding-right: 0;
+      font-size: 3rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+ .welcome-bg{
+   background-image: url('resources/bg-vertical1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+   background-position: center;
+   background-color: #000;
+ }
+ @media (max-width: 768px) {
+  .welcome-bg {
+    background-image: url('resources/bg-vertical1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #000; /* o el color que combine */
+  }
+}
+
+
+ .resaltar-frase {
+  font-style: italic;
+  font-size: 1.2rem;          /* Tamaño grande para destacar */
+  text-align: center;         /* Centrar el texto */
+  margin: 1rem 0;
+}
+
+    .countdown {
+      text-align: center;
+      padding: 40px 20px;
+      background: #f8f8f8;
+      font-size: 1.5em;
+    }
+    .countdown span {
+      display: inline-block;
+      margin: 0 10px;
+      min-width: 80px;
+    }
+
+    section {
+      padding: 5px 20px; /* Espaciado alrededor de las secciones */
+      max-width: 1200px;
+      margin: 10px auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .mosaic-zoom {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .mosaic-zoom img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .mosaic-zoom img:hover {
+      transform: scale(1.05);
+    }
+
+    .info-block {
+      text-align: center;
+      margin: 50px 0;
+      font-size: 1.2em;
+    }
+
+
+  /*Modal Bienvenida*/
+.modal-backdrop.show {
+  background-color: rgba(255, 255, 255, 0.301); /* color blanco semitransparente */
+  backdrop-filter: blur(8px); /* desenfoque */
+  -webkit-backdrop-filter: blur(8px); /* para Safari */
+}
+
+
+.modal-left {
+  flex: 1;
+  background:rgb(253, 242, 248);
+  /* color:#444; */
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.modal-left p.lead {
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+.modal-left button#btnIngresar {
+  margin-top: 1rem;
+  align-self: center;
+  background:transparent;
+  /* color: #444; */
+  font-weight: 400;
+  font-size: 24px;
+  padding: 0.6rem 2rem;
+  border: none;
+    /* box-shadow: 0 4px 15px rgba(3, 179, 170, 0.399); */
+  cursor: pointer;
+  
+}
+
+.modal-left button#btnIngresar:hover {
+  /* background: linear-gradient(45deg, #FF69B4, #D6336C); */
+  box-shadow: 0 6px 20px rgba(226, 223, 223, 0.966);
+
+}
+
+.modal-right{
+        flex: 1;
+        background-image: url('resources/bg-maite5-vertical.png');
+        background-size: cover ;
+        background-repeat: no-repeat;
+        background-position:center;
+        min-height: 300px;
+}
+
+.modal-left h5,
+.modal-left p.lead,
+.modal-left {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideFadeIn 1s ease forwards;
+}
+
+.modal-left h5 {
+  animation-delay: 0.3s;
+}
+
+.modal-left p.lead {
+  animation-delay: 1s;
+}
+
+.modal-left button#btnIngresar {
+  animation-delay: 1.7s;
+}
+
+@keyframes slideFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .modal-right {
+    display: none; /* Oculta la imagen en pantallas pequeñas */
+  }
+
+}
+
+
+@media (max-width: 767px) {
+  .modal-left {
+    padding: 1rem;
+  }
+  .modal-left p.lead {
+    font-size: 1rem;
+  }
+  .modal-left button#btnIngresar {
+    width: 100%;
+  }
+}
+/*modal ubicacion/calendar*/
+.modal-custom-content {
+  /* background-color:#1b6b74e1; */
+  color:#181717;
+  text-align: center;
+  padding: 4rem 1rem 2rem; /* más padding abajo para espacio para el botón */
+  border-radius: 10px;
+  position: relative;
+  max-width: 100vh;   /* menos ancho */
+  min-height: 80%;  /* más alto */
+  margin: 0 auto;     /* centrar horizontal */
+}
+
+/* Contenedor fijo inferior */
+#countdown {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color:rgb(8, 63, 80);
+  color: #fff;
+  display: flex;
+  flex-direction: column; /* Apila texto arriba y cards abajo */
+  align-items: center;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+  z-index: 1050;
+  gap: 0.3rem;
+  overflow-x: hidden;
+
+}
+
+/* Título con animación */
+.countdown-title {
+  /* font-weight: bold; */
+  font-size: 1rem;
+  color: #fff;
+  text-align: center;
+ animation: fadeInDown 0.5ms ease forwards;
+}
+
+/* Cards en una fila */
+#countdown .countdown-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Animación de entrada suave */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.countdown-card {
+  flex: 1 1 auto;
+  max-width: 20%;               /* Para que 4 tarjetas entren cómodamente en una línea */
+  padding: 0.5rem 0.4rem;
+  text-align: center;
+  /* border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);  */
+  background-color: var(--color-secundary);
+  color: #fcf8f8;
+  user-select: none;
+  transition: transform 0.3s ease;
+  min-width: 0;
+}
+
+.countdown-card:hover {
+  transform: scale(1.05);
+}
+
+.countdown-card span {
+  font-size: 2rem;
+  font-weight: 700;
+  display: block;
+  line-height: 1;
+}
+
+.countdown-card .label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+
+
+@media (max-width: 768px) {
+  #countdown {
+    gap: 0.5rem;                /* Aún más juntas en móvil */
+    padding: 0.25rem 0.25rem;
+  }
+
+  .countdown-card {
+    max-width: 15%;             /* Mantiene todas en una línea */
+    padding: 0.6rem 0.2rem;
+  }
+
+  .countdown-card span {
+    font-size: 1.2rem;
+  }
+
+  .countdown-card .label {
+    font-size: 0.75rem;
+    margin-left: 30px;
+  }
+}
+
+#btnIngresar {
+  cursor: pointer;
+  animation: bunnyJumpLoop 2s ease-in-out infinite;
+}
+
+#btnIngresar:hover {
+  animation: bunnyJumpHover 0.4s ease forwards;
+}
+
+/* Animación automática en loop */
+@keyframes bunnyJumpLoop {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* Animación más marcada en hover */
+@keyframes bunnyJumpHover {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+.img-conejo {
+  max-width: 100px;
+  height: auto;
+  animation: bunnyBounce 2.5s ease-in-out infinite;
+  transform: scaleX(-1); /* Hace que el conejo mire hacia la frase */
+    margin-bottom: 1rem;
+    max-width: 80px;
+}
+
+@keyframes bunnyBounce {
+  0%, 100% { transform: scaleX(-1) translateY(0); }
+  50%      { transform: scaleX(-1) translateY(-12px); }
+}
+
+@media (max-width: 768px) {
+  .frase-con-conejo {
+    flex-direction: column;
+  }
+
+ 
+}
+.frase{
+  font-family: "Great Vibes", cursive;
+  /* color: rgb(47, 77, 58);  */
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.text-frases {
+   font-family: "Great Vibes", cursive;
+  /* Opcional: otros estilos para darle más personalidad */
+  font-weight: 700;  /* o 700 si querés más negrita */
+  font-size: 3rem; /* tamaño acorde al diseño */  
+  letter-spacing: 0.05em; /* un poco de espacio entre letras */
+}
+
+.text-titulos {
+   font-family: "Great Vibes", cursive;
+ 
+  /* Opcional: otros estilos para darle más personalidad */
+  font-weight: 400;  /* o 700 si querés más negrita */
+  font-size: 2rem; /* tamaño acorde al diseño */
+  letter-spacing: 0.05em; /* un poco de espacio entre letras */
+  /* color:darkred !important;  ejemplo de color cálido y elegante */
+  
+}
+  .galeria-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center top;
+    cursor: pointer;
+  }
+
+   .galeria-img.centrada {
+    object-position: center bottom;
+  }
+  .carousel-item img {
+  height: 90vh; /* o lo que prefieras */
+  object-fit: contain; /* o cover si querés que rellene */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color:rgba(39, 155, 190, 0.945); /* fondo oscuro */
+  background-size: 100% 100%; /* que se vea más grande */
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%; /* opcional, estilo de botón circular */
+}
+@keyframes saltar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+
+}
+h6{
+  font-family: "Sedan", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.mensaje-confirmacion-bosque {
+    background: rgba(20, 35, 18, 0.65); /* verde bosque profundo translúcido */
+    backdrop-filter: blur(10px);
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    /* Sutil textura o luz del bosque */
+    background-image:
+        url('https://i.imgur.com/Rt3et6Q.png'), /* bruma o partículas suaves */
+        linear-gradient(
+            135deg,
+            rgba(30, 50, 28, 0.6),
+            rgba(17, 28, 16, 0.8)
+        );
+    background-size: cover;
+    background-blend-mode: soft-light;
+    animation: brilloBosque 6s ease-in-out infinite alternate;
+}
+
+/* Efecto de respiración/luz suave */
+@keyframes brilloBosque {
+    0% { box-shadow: 0 0 20px rgba(90,135,90,0.2); }
+    100% { box-shadow: 0 0 35px rgba(130,180,130,0.35); }
+}
+
+/* Aseguramos colores mágicos y armónicos */
+.mensaje-confirmacion-bosque h6 {
+    color: #dfeee0 !important; /* verde muy claro tipo "luz del bosque" */
+}
