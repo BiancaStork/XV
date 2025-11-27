@@ -733,17 +733,27 @@ function enviarConfirmacion() {
     window.location.href = url;
 }
 
+/// ------------------------------
+// Limpiar formulario y mostrar mensaje al volver de WhatsApp o al volver a la pestaña
 // ------------------------------
-// Limpiar formulario y mostrar mensaje al volver desde WhatsApp
-// Compatible con móviles y PC
-// ------------------------------
-window.addEventListener("load", function () {
+function checkConfirmacion() {
     if (sessionStorage.getItem("confirmado") === "true") {
-        resetForm();                 // Limpiar formulario
+        resetForm();                  // Limpiar formulario
         mostrarMensajeConfirmacion(); // Mostrar toast
-        sessionStorage.removeItem("confirmado"); // Limpiar flag
+        sessionStorage.removeItem("confirmado"); // Borrar flag
+    }
+}
+
+// Ejecutar al cargar la página
+window.addEventListener("load", checkConfirmacion);
+
+// Ejecutar también cuando la pestaña vuelve a estar visible (móviles)
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") {
+        checkConfirmacion();
     }
 });
+
 </script>
 
 <script>
