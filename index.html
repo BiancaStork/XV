@@ -659,8 +659,10 @@ reiniciarAnimacionesModal();
  
 <!--CONFIRMAR ASISTENCIA-->
 <script src="resetForm.js"></script>
-  <script>
+<script>
+// ------------------------------
 // Mostrar/ocultar acompañantes según la selección
+// ------------------------------
 document.getElementById("noAsiste").addEventListener("change", function () {
     document.getElementById("campoacompanantes").style.display = "none";
 });
@@ -669,6 +671,33 @@ document.getElementById("asiste").addEventListener("change", function () {
     document.getElementById("campoacompanantes").style.display = "block";
 });
 
+// ------------------------------
+// Función para limpiar el formulario
+// ------------------------------
+function resetForm() {
+    document.getElementById("nombre").value = "";
+    document.getElementById("cantidad").value = "";
+    document.getElementById("asiste").checked = true;
+    document.getElementById("noAsiste").checked = false;
+    document.getElementById("campoacompanantes").style.display = "block";
+}
+
+// ------------------------------
+// Función para mostrar mensaje tipo toast
+// ------------------------------
+function mostrarMensajeConfirmacion() {
+    const mensaje = document.getElementById("mensaje-confirmacion");
+    if (!mensaje) return; // Si el div no existe, salir
+    mensaje.style.display = "block";
+    // Ocultar automáticamente después de 3 segundos
+    setTimeout(() => {
+        mensaje.style.display = "none";
+    }, 3000);
+}
+
+// ------------------------------
+// Función principal de confirmación
+// ------------------------------
 function enviarConfirmacion() {
     const nombre = document.getElementById("nombre").value.trim();
     const asistencia = document.querySelector('input[name="asistencia"]:checked').value;
@@ -679,7 +708,6 @@ function enviarConfirmacion() {
         return;
     }
 
-    // Si no asiste → 0 acompañantes
     const acomp = asistencia === "Asiste" ? (cantidad === "" ? 0 : Number(cantidad)) : 0;
 
     // Guardar en Google Sheet
@@ -690,33 +718,33 @@ function enviarConfirmacion() {
             asistencia: asistencia,
             acompanantes: acomp
         }),
-        
     });
-  
+
+    // Guardar flag en sessionStorage para saber que se confirmó
+    sessionStorage.setItem("confirmado", "true");
+
     // Mensaje para WhatsApp
-    let mensaje = "";
+    let mensaje = asistencia === "Asiste"
+        ? `Hola! Confirmo mi asistencia al XV de Maite!\nNombre: ${nombre}\nCant.Personas: ${acomp}`
+        : `Hola! Lamento informar que NO podré asistir al XV de Maite!\nNombre: ${nombre}`;
 
-    if (asistencia === "Asiste") {
-        mensaje = `Hola! Confirmo mi asistencia al XV de Maite!\nNombre: ${nombre}\nCant.Personas: ${acomp}`;
-    } else {
-        mensaje = `Hola! Lamento informar que NO podré asistir al XV de Maite!\nNombre: ${nombre}`;
-    }
-    
-    const telefono = "541173736886"; // ← número whatsapp a 
+    const telefono = "541173736886";
     const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-
     window.location.href = url;
-    
-   }
-   window.addEventListener("pageshow", function (event) {
-    // Se ejecuta si volvés desde el historial (back) o desde la cache
-    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
-        resetForm(); // < --- limpia el formulario
-        mostrarMensajeConfirmacion(); // <-- mensaje
+}
+
+// ------------------------------
+// Limpiar formulario y mostrar mensaje al volver desde WhatsApp
+// Compatible con móviles y PC
+// ------------------------------
+window.addEventListener("load", function () {
+    if (sessionStorage.getItem("confirmado") === "true") {
+        resetForm();                 // Limpiar formulario
+        mostrarMensajeConfirmacion(); // Mostrar toast
+        sessionStorage.removeItem("confirmado"); // Limpiar flag
     }
 });
-  </script>
-
+</script>
 
 <script>
     AOS.init();
