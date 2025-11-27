@@ -669,14 +669,27 @@ reiniciarAnimacionesModal();
 <!--CONFIRMAR ASISTENCIA-->
 <script src="resetForm.js"></script>
 <script>
-function bloquearFormulario() {
-    // Deshabilitar todos los inputs y el botón
-    const inputs = document.querySelectorAll("#form-asistencia input, #form-asistencia button");
-    inputs.forEach(i => i.disabled = true);
+// ------------------------------
+// Mostrar/ocultar acompañantes según la selección
+// ------------------------------
+document.getElementById("noAsiste").addEventListener("change", function () {
+    document.getElementById("campoacompanantes").style.display = "none";
+});
 
-    // Mostrar el mensaje
-    const mensaje = document.getElementById("mensaje-enviado");
-    mensaje.style.display = "block";
+document.getElementById("asiste").addEventListener("change", function () {
+    document.getElementById("campoacompanantes").style.display = "block";
+});
+
+// ------------------------------
+// Bloquear formulario y mostrar mensaje
+// ------------------------------
+function bloquearFormulario() {
+    // Ocultar todos los inputs, botones, labels y spans del formulario
+    const elementos = document.querySelectorAll("#form-asistencia input, #form-asistencia button, #form-asistencia label, #form-asistencia span");
+    elementos.forEach(el => el.style.display = "none");
+
+    // Mostrar mensaje de confirmación
+    document.getElementById("mensaje-enviado").style.display = "block";
 }
 
 // ------------------------------
